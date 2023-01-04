@@ -11,7 +11,7 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
   demorg: 'melon-cicd-rg'
-  subscription : '3189abd7-c2a1-43d6-8b85-823f252d54f1'
+  subscription : 'melonserviceconn'
   webappname : 'melonbetawebapp'
   prodwebappname : 'melonbetawebapp-prod'
 

@@ -11,7 +11,7 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
   demorg: 'melon-cicd-rg'
-  subscription : 'Visual Studio Professional Subscription (3189abd7-c2a1-43d6-8b85-823f252d54f1)'
+  serviceConnectionName: DevOpsSC
   webappname : 'melonbetawebapp'
   prodwebappname : 'melonbetawebapp-prod'
 
@@ -28,7 +28,7 @@ stages:
     - task: AzureCLI@1
       displayName: 'Azure CLI '
       inputs:
-        azureSubscription: $(subscription)
+        azureSubscription: $(serviceConnectionName)
         scriptLocation: inlineScript
         inlineScript: 'az group create --location northeurope --name $(demorg)'
 
@@ -36,7 +36,7 @@ stages:
     - task: AzureResourceGroupDeployment@2
       displayName: 'Azure Deployment:Create Or Update Resource Group action on $(demorg)'
       inputs:
-        azureSubscription: $(subscription)
+        azureSubscription: $(serviceConnectionName)
         resourceGroupName: '$(demorg)'
         location: 'North Europe'
         templateLocation: 'Linked artifact'
@@ -96,7 +96,7 @@ stages:
 
           - task: AzureWebApp@1
             inputs:
-              azureSubscription: '$(subscription)'
+              azureSubscription: '$(serviceConnectionName)'
               appType: 'webApp'
               appName: '$(webappname)'
               package: '$(System.ArtifactsDirectory)/drop/$(webappname).zip'
@@ -125,7 +125,7 @@ stages:
 
           - task: AzureWebApp@1
             inputs:
-              azureSubscription: '$(subscription)'
+              azureSubscription: '$(serviceConnectionName)'
               appType: 'webApp'
               appName: '$(prodwebappname)'
               package: '$(System.ArtifactsDirectory)/drop/$(webappname).zip'
